@@ -12,6 +12,7 @@ const fileLoader = document.querySelector(".file-loader");
 const fileModal = document.querySelector(".file-modal");
 const fileModalTitle = document.getElementById("file-modal-title");
 const fileModalFrame = document.querySelector(".file-modal__preview iframe");
+const fileModalLoad = document.querySelector(".file-modal__load");
 const fileModalDownload = document.querySelector(".file-modal__download");
 const fileModalOpen = document.querySelector(".file-modal__open");
 const fileCloseControls = Array.from(document.querySelectorAll("[data-file-close]"));
@@ -114,6 +115,7 @@ setActiveScene(sections[0]);
 if (video) {
   video.addEventListener("loadedmetadata", () => {
     videoReady = true;
+    document.body.classList.add("video-loaded");
     video.pause();
     syncVideoToScroll();
   });
@@ -124,6 +126,7 @@ if (video) {
 
   video.addEventListener("error", () => {
     videoReady = false;
+    document.body.classList.remove("video-loaded");
   });
 }
 
@@ -148,9 +151,11 @@ const closeFileModal = () => {
   }
   if (fileModal) {
     fileModal.hidden = true;
+    fileModal.classList.remove("is-previewing");
   }
   if (fileModalFrame) {
     fileModalFrame.removeAttribute("src");
+    fileModalFrame.removeAttribute("data-preview-src");
   }
 };
 
@@ -173,7 +178,9 @@ const openFileModal = (link) => {
       ? "周简制片作品集.pdf"
       : "";
   fileModalTitle.textContent = fileTitle;
-  fileModalFrame.src = link.href;
+  fileModal.classList.remove("is-previewing");
+  fileModalFrame.removeAttribute("src");
+  fileModalFrame.setAttribute("data-preview-src", link.href);
   fileModalDownload.href = link.href;
   fileModalDownload.setAttribute("download", downloadName);
   fileModalOpen.href = link.href;
@@ -193,6 +200,18 @@ folderWindows.forEach((link) => {
     openFileModal(link);
   });
 });
+
+if (fileModalLoad && fileModalFrame && fileModal) {
+  fileModalLoad.addEventListener("click", () => {
+    const previewSrc = fileModalFrame.getAttribute("data-preview-src");
+    if (!previewSrc) {
+      return;
+    }
+
+    fileModalFrame.src = previewSrc;
+    fileModal.classList.add("is-previewing");
+  });
+}
 
 fileCloseControls.forEach((control) => {
   control.addEventListener("click", closeFileModal);

@@ -15,7 +15,7 @@
     <video
       class="scroll-video"
       src="./assets/hero-scroll.mp4?v=20260703-video3"
-      preload="auto"
+      preload="metadata"
       muted
       playsinline
       aria-label="夜间片场滚动视频背景"
@@ -65,7 +65,12 @@
           <h2 id="file-modal-title">文件标题</h2>
         </div>
         <div class="file-modal__preview">
-          <iframe title="PDF 预览区域"></iframe>
+          <div class="file-modal__notice">
+            <span>文件较大</span>
+            <p>大陆网络下直接预览可能较慢。建议优先使用新窗口打开或下载文件。</p>
+            <button class="file-modal__load" type="button">在此预览</button>
+          </div>
+          <iframe title="PDF 预览区域" loading="lazy"></iframe>
         </div>
         <div class="file-modal__actions">
           <a class="file-modal__download" href="#" download>下载文件</a>
