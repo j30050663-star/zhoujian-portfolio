@@ -7,11 +7,6 @@ const progressIndex = document.querySelector(".progress-index");
 const progressSection = document.querySelector(".progress-section");
 const copyControls = Array.from(document.querySelectorAll("[data-copy-target]"));
 const startupOverlay = document.querySelector(".startup-overlay");
-const introMusic = document.getElementById("intro-music");
-const soundSystem = document.querySelector(".sound-system");
-const musicControl = document.querySelector(".music-control");
-const musicControlLabel = document.querySelector(".music-control__label");
-const musicControlState = document.querySelector(".music-control__state");
 const folderWindows = Array.from(document.querySelectorAll(".folder-window"));
 const fileLoader = document.querySelector(".file-loader");
 const fileModal = document.querySelector(".file-modal");
@@ -23,10 +18,7 @@ const fileCloseControls = Array.from(document.querySelectorAll("[data-file-close
 
 let ticking = false;
 let videoReady = false;
-let isMusicMuted = false;
 let fileOpenTimer = 0;
-const introMusicBaseVolume = 0.16;
-const introMusicFadeDuration = 3;
 
 const sectionLabels = {
   "00": "首页",
@@ -149,126 +141,6 @@ const finishStartup = () => {
 
 window.setTimeout(finishStartup, 1350);
 
-const setMusicControlState = (isPlaying) => {
-  if (!musicControl || !musicControlLabel || !musicControlState) {
-    return;
-  }
-
-  musicControl.classList.toggle("is-playing", isPlaying);
-  document.body.classList.toggle("sound-playing", isPlaying && !isMusicMuted);
-  document.body.classList.toggle("sound-muted", isMusicMuted);
-  musicControl.setAttribute("aria-pressed", String(isPlaying));
-  musicControl.setAttribute("aria-label", isPlaying ? "关闭背景音乐" : "打开背景音乐");
-  musicControlLabel.textContent = isPlaying ? "on" : "off";
-  if (isMusicMuted) {
-    musicControlState.textContent = "状态：已静音";
-  } else {
-    musicControlState.textContent = isPlaying ? "状态：播放中" : "状态：未开启";
-  }
-};
-
-const resetIntroMusic = () => {
-  introMusic.pause();
-  introMusic.currentTime = 0;
-  introMusic.volume = introMusicBaseVolume;
-  setMusicControlState(false);
-};
-
-const startIntroMusic = async () => {
-  if (!introMusic) {
-    return;
-  }
-
-  isMusicMuted = false;
-  introMusic.muted = false;
-  if (Number.isFinite(introMusic.duration) && introMusic.currentTime >= introMusic.duration) {
-    introMusic.currentTime = 0;
-  }
-  introMusic.volume = introMusicBaseVolume;
-  await introMusic.play();
-  setMusicControlState(true);
-};
-
-const pauseIntroMusic = () => {
-  if (!introMusic) {
-    return;
-  }
-
-  introMusic.pause();
-  setMusicControlState(false);
-};
-
-const toggleIntroMusic = async () => {
-  if (!introMusic) {
-    return;
-  }
-
-  if (!introMusic.paused) {
-    pauseIntroMusic();
-    return;
-  }
-
-  await startIntroMusic();
-};
-
-const setSilentBrowsing = () => {
-  isMusicMuted = true;
-  if (introMusic) {
-    introMusic.muted = true;
-    introMusic.pause();
-  }
-  setMusicControlState(false);
-};
-
-const toggleMute = () => {
-  if (!introMusic) {
-    return;
-  }
-
-  isMusicMuted = !isMusicMuted;
-  introMusic.muted = isMusicMuted;
-  setMusicControlState(!introMusic.paused);
-};
-
-if (introMusic && musicControl) {
-  introMusic.volume = introMusicBaseVolume;
-
-  musicControl.addEventListener("click", async () => {
-    try {
-      await toggleIntroMusic();
-    } catch {
-      musicControl.disabled = true;
-      if (musicControlLabel) {
-        musicControlLabel.textContent = "不可用";
-      }
-    }
-  });
-
-  introMusic.addEventListener("timeupdate", () => {
-    if (!Number.isFinite(introMusic.duration) || introMusic.duration <= 0) {
-      return;
-    }
-
-    const fadeStart = Math.max(introMusic.duration - introMusicFadeDuration, 0);
-    if (introMusic.currentTime >= fadeStart && introMusic.currentTime < introMusic.duration) {
-      const remaining = introMusic.duration - introMusic.currentTime;
-      const fadeRatio = clamp(remaining / introMusicFadeDuration, 0, 1);
-      introMusic.volume = introMusicBaseVolume * fadeRatio;
-    }
-  });
-
-  introMusic.addEventListener("ended", () => {
-    resetIntroMusic();
-  });
-
-  introMusic.addEventListener("error", () => {
-    musicControl.disabled = true;
-    if (musicControlLabel) {
-      musicControlLabel.textContent = "不可用";
-    }
-  });
-}
-
 const closeFileModal = () => {
   window.clearTimeout(fileOpenTimer);
   if (fileLoader) {
@@ -326,8 +198,7 @@ fileCloseControls.forEach((control) => {
   control.addEventListener("click", closeFileModal);
 });
 
-window.addEventListener("keydown", async (event) => {
-  const key = event.key.toLowerCase();
+window.addEventListener("keydown", (event) => {
   const isTyping =
     event.target instanceof HTMLElement &&
     ["input", "textarea", "select"].includes(event.target.tagName.toLowerCase());
@@ -340,21 +211,6 @@ window.addEventListener("keydown", async (event) => {
     if ((fileModal && !fileModal.hidden) || (fileLoader && !fileLoader.hidden)) {
       closeFileModal();
     }
-    return;
-  }
-
-  if (event.code === "Space") {
-    event.preventDefault();
-    try {
-      await toggleIntroMusic();
-    } catch {
-      setSilentBrowsing();
-    }
-    return;
-  }
-
-  if (key === "m") {
-    toggleMute();
   }
 });
 
