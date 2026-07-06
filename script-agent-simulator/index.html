@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>剧集开发与投资判断 Agent / 模拟工作台 | 周简</title>
+    <meta
+      name="description"
+      content="周简的剧集开发与投资判断 Agent 公开模拟工作台。"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="sim-shell">
+      <header class="topbar">
+        <div class="topbar-path">02 / 剧集开发 Agent / 模拟工作台</div>
+        <nav class="topbar-links" aria-label="页面导航">
+          <a href="../index.html">返回首页</a>
+          <a href="../index.html#lab">返回 Agent 正文介绍</a>
+        </nav>
+        <div class="topbar-title">
+          <span>周简AI作品集</span>
+          <strong>系统模块页</strong>
+        </div>
+      </header>
+
+      <section class="workspace-header" aria-label="工作台说明">
+        <div>
+          <p class="eyebrow">02 / 剧集开发 Agent / 模拟工作台</p>
+          <h1>剧集开发与投资判断 Agent</h1>
+          <div class="hero-tags" aria-label="页面标签">
+            <span>公开模拟版</span>
+            <span>样例数据</span>
+            <span>项目判断输入面板</span>
+          </div>
+        </div>
+        <p>
+          本页展示一个面向剧集公司内部决策的公开演示版本。它以项目材料为起点，模拟完成阶段识别、审读任务配置、风险排序、六类评委判断与报告生成。当前样例取自已有原创测试样本《静默车间》和《雪夜驿书》，页面只呈现项目概况与模拟结果，不展示完整剧本正文。
+        </p>
+      </section>
+
+      <section class="workbench" aria-label="剧集开发 Agent 模拟器">
+        <aside class="panel input-panel" aria-label="左侧输入面板">
+          <div class="panel-heading">
+            <span>01 / 项目输入</span>
+            <h2>项目输入</h2>
+          </div>
+
+          <div class="sample-switch" aria-label="选择样例项目">
+            <button class="sample-tab is-active" type="button" data-sample="jingmo">
+              静默车间
+            </button>
+            <button class="sample-tab" type="button" data-sample="xueye">
+              雪夜驿书
+            </button>
+          </div>
+
+          <label>
+            项目名称
+            <input id="project-title" type="text" />
+          </label>
+
+          <label>
+            项目类型
+            <select id="project-type">
+              <option>都市女性悬疑</option>
+              <option>古装情感</option>
+              <option>古装权谋探案</option>
+              <option>现实主义</option>
+              <option>青春成长</option>
+              <option>奇幻冒险</option>
+            </select>
+          </label>
+
+          <label>
+            项目阶段
+            <select id="project-stage">
+              <option>小说采买前</option>
+              <option>原创项目初评</option>
+              <option>采买后选编剧</option>
+              <option>剧本开发中</option>
+              <option>平台沟通前</option>
+            </select>
+          </label>
+
+          <fieldset class="mode-field">
+            <legend>材料输入方式</legend>
+            <label class="radio-row">
+              <input type="radio" name="input-mode" value="paste" checked />
+              <span>粘贴文本</span>
+            </label>
+            <button class="file-ui" id="mock-upload" type="button">
+              上传文件
+            </button>
+          </fieldset>
+
+          <label>
+            材料摘要
+            <textarea id="project-brief" rows="16"></textarea>
+          </label>
+
+          <section class="task-box" aria-label="分析任务选择">
+            <h3>02 / 分析任务</h3>
+            <label><input type="checkbox" value="小说采买评估" checked />小说采买评估</label>
+            <label><input type="checkbox" value="剧本审读" checked />剧本审读</label>
+            <label><input type="checkbox" value="多评委判断" checked />多评委判断</label>
+            <label><input type="checkbox" value="市场与平台参考" checked />市场与平台参考</label>
+            <label><input type="checkbox" value="大女主专项判断" checked />大女主专项判断</label>
+            <label><input type="checkbox" value="投资风险判断" checked />投资风险判断</label>
+          </section>
+
+          <button class="primary-button" id="run-analysis" type="button">
+            启动模拟分析
+          </button>
+          <p class="microcopy" id="upload-hint">
+            上传按钮只展示界面，不读取本地文件。
+          </p>
+        </aside>
+
+        <section class="panel process-panel" aria-label="中间分析面板">
+          <div class="panel-heading">
+            <span>03 / 模拟分析流程</span>
+            <h2>任务运行状态</h2>
+          </div>
+
+          <div class="run-state">
+            <div>
+              <span id="run-status">等待启动</span>
+              <strong id="current-sample">《静默车间》</strong>
+            </div>
+            <div class="progress-meter" aria-hidden="true">
+              <span id="progress-bar"></span>
+            </div>
+          </div>
+
+          <div class="progress-list" id="progress-list" aria-live="polite"></div>
+
+          <div class="version-box">
+            <div class="section-title">
+              <h3>版本记录</h3>
+              <span id="version-status">未保存新版本</span>
+            </div>
+            <ol id="version-history"></ol>
+          </div>
+        </section>
+
+        <section class="panel output-panel" aria-label="右侧输出面板">
+          <div class="panel-heading output-heading">
+            <span>04-06 / 判断档案输出</span>
+            <h2>项目判断报告</h2>
+          </div>
+
+          <div class="action-row">
+            <button class="ghost-button" id="copy-report" type="button">复制报告</button>
+            <button class="ghost-button" id="download-md" type="button">下载文本报告</button>
+            <button class="ghost-button" id="save-version" type="button">保存版本</button>
+          </div>
+
+          <article class="report-stack" id="report-output">
+            <p class="empty-state">
+              点击“启动模拟分析”后，这里会生成公开样例报告。当前页面不接入真实模型。
+            </p>
+          </article>
+        </section>
+
+        <section class="panel reviewer-panel" aria-label="六评委意见">
+          <div class="panel-heading">
+            <span>07 / 六类视角判断</span>
+            <h2>六类视角判断</h2>
+          </div>
+          <div class="reviewer-intro">
+            <p>
+              该区域展示六类判断视角在同一项目上的模拟分歧：内容、长剧结构、观众、市场、平台与制作投资。分数只用于公开演示，不代表私有版真实评估规则。
+            </p>
+          </div>
+          <div class="reviewer-grid" id="reviewer-grid"></div>
+        </section>
+      </section>
+
+      <footer class="public-notice">
+        <span>08 / 公开模拟说明</span>
+        <p>
+          当前页面为公开模拟工作台，只用于展示 Agent 的交互框架和输出结构。本页面不接入真实模型，不包含核心提示词、评分权重、平台匹配规则、真实项目案例、私有剧本材料、市场资料库、Agent 执行流程或接口密钥。
+        </p>
+      </footer>
+    </main>
+
+    <script src="mock-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 制片统筹 Agent 模拟工作台 | 周简</title>
+    <meta
+      name="description"
+      content="周简的 AI 制片统筹 Agent 公开模拟工作台，使用《静默车间》和《雪夜驿书》测试案例展示镜头判断、任务拆解、成本风险和后期交接。"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="sim-shell">
+      <nav class="sim-nav" aria-label="模拟工作台导航">
+        <a href="../../../index.html">00 / 返回首页</a>
+        <span>03 / AI 制片统筹 / 模拟工作台</span>
+        <a href="../index.html">返回 Agent 正文介绍</a>
+      </nav>
+
+      <section class="sim-hero">
+        <div>
+          <p class="sim-eyebrow">03 / AI 制片统筹 Agent</p>
+          <h1>AI 制片统筹 Agent</h1>
+          <div class="sim-tags" aria-label="版本说明">
+            <span>公开模拟版</span>
+            <span>模拟数据</span>
+            <span>AI Agent Lab / 模拟入口</span>
+          </div>
+        </div>
+        <p>
+          这是作品集系统中的一个内部模块。它用两个测试剧本模拟制片统筹判断：哪些镜头可以交给 AI，哪些必须真人拍摄，哪些需要后期接收，并把风险、成本和交付条件提前摆出来。
+        </p>
+      </section>
+
+      <section class="workbench" aria-label="AI 制片统筹模拟工作台">
+        <aside class="input-panel">
+          <div class="panel-title">
+            <span>01 / 制作输入</span>
+            <strong>制作输入</strong>
+          </div>
+
+          <label>
+            示例剧本
+            <select id="scenario-select">
+              <option value="silentFactory">《静默车间》第一集</option>
+              <option value="snowyDispatch">《雪夜驿书》第一集</option>
+            </select>
+          </label>
+
+          <label>
+            项目名称
+            <input id="project-title" type="text" />
+          </label>
+
+          <label>
+            片段类型
+            <select id="segment-type">
+              <option>剧本片段</option>
+              <option>分镜描述</option>
+              <option>概念预演</option>
+              <option>AI 短片</option>
+              <option>真人影像辅助</option>
+            </select>
+          </label>
+
+          <label>
+            目标输出
+            <select id="target-output">
+              <option>镜头拆解表</option>
+              <option>AI 适配判断</option>
+              <option>模型选择建议</option>
+              <option>提示词草案</option>
+              <option>成本与风险预估</option>
+            </select>
+          </label>
+
+          <label>
+            文本输入
+            <textarea id="shot-brief" rows="18"></textarea>
+          </label>
+
+          <button class="primary-button" id="run-routing" type="button">启动模拟拆解</button>
+
+          <div class="process-card" aria-label="流程状态">
+            <div class="panel-title compact">
+              <span>02 / 模拟拆解流程</span>
+              <strong id="run-status">等待启动</strong>
+            </div>
+            <ol id="process-list" class="process-list">
+              <li>输入读取</li>
+              <li>剧本拆解</li>
+              <li>镜头分类</li>
+              <li>模型匹配</li>
+              <li>资产整理</li>
+              <li>提示词生成</li>
+              <li>视频生成</li>
+              <li>失败重试</li>
+              <li>合成剪辑</li>
+              <li>质检</li>
+              <li>交付归档</li>
+            </ol>
+          </div>
+        </aside>
+
+        <section class="result-panel">
+          <div class="status-strip">
+            <span id="version-status">公开模拟版 / 模拟数据</span>
+            <span id="case-status">未生成镜头表</span>
+          </div>
+
+          <div class="dashboard-grid reveal-card" aria-label="模拟统计信息">
+            <article>
+              <span>总镜头数</span>
+              <strong id="stat-shot-count">0</strong>
+            </article>
+            <article>
+              <span>AI 可用</span>
+              <strong id="stat-ai-ready">0</strong>
+            </article>
+            <article>
+              <span>高风险</span>
+              <strong id="stat-high-risk">0</strong>
+            </article>
+            <article>
+              <span>资产待补</span>
+              <strong id="stat-needs-asset">0</strong>
+            </article>
+          </div>
+
+          <section class="analysis-card reveal-card" aria-label="模拟分析进度">
+            <div class="panel-title compact">
+              <span>02 / 模拟拆解流程</span>
+              <strong id="analysis-label">等待启动</strong>
+            </div>
+            <div class="analysis-bar" aria-hidden="true">
+              <span id="analysis-progress"></span>
+            </div>
+            <ol id="analysis-steps" class="analysis-steps">
+              <li>读取输入</li>
+              <li>拆镜头</li>
+              <li>判断边界</li>
+              <li>匹配模型</li>
+              <li>生成镜头表</li>
+              <li>输出结果</li>
+            </ol>
+          </section>
+
+          <div class="summary-grid reveal-card" aria-label="制片判断摘要">
+            <article>
+              <span>核心判断</span>
+              <p id="summary-decision"></p>
+            </article>
+            <article>
+              <span>边界提醒</span>
+              <p id="summary-boundary"></p>
+            </article>
+            <article>
+              <span>交付重点</span>
+              <p id="summary-handoff"></p>
+            </article>
+          </div>
+
+          <div class="board-title reveal-card">
+            <div class="panel-title compact">
+              <span>03 / 镜头生产表</span>
+              <strong>镜头生产看板</strong>
+            </div>
+            <p>点击任意镜头，右侧会同步显示生产方式、模型策略、模拟视频提示词和后期接收建议。</p>
+          </div>
+
+          <div class="shot-layout">
+            <div class="shot-table-wrap reveal-card">
+              <div class="shot-id-note">
+                <strong>镜头编号 命名说明</strong>
+                <p>
+                  前缀代表测试剧本：JMC =《静默车间》，XYS =《雪夜驿书》；后三位数字代表当前模拟拆解中的镜头序号。比如 XYS-001 表示《雪夜驿书》模拟拆解的第 1 个镜头。
+                </p>
+              </div>
+              <table class="shot-table">
+                <thead>
+                  <tr>
+                    <th>镜头编号</th>
+                    <th>镜头描述</th>
+                    <th>生产方式</th>
+                    <th>AI 适配等级</th>
+                    <th>模型策略</th>
+                    <th>资产需求</th>
+                    <th>风险等级</th>
+                    <th>重试预算</th>
+                    <th>质检重点</th>
+                  </tr>
+                </thead>
+                <tbody id="shot-table-body"></tbody>
+              </table>
+            </div>
+
+            <article class="detail-card reveal-card">
+              <div class="panel-title">
+                <span>04 / 镜头详情</span>
+                <strong id="detail-title">等待选择镜头</strong>
+              </div>
+              <div id="detail-content">
+                <p>点击镜头后，这里会显示判断理由、所需资产、模拟提示词草案、风险提示和后期衔接建议。</p>
+              </div>
+            </article>
+          </div>
+
+          <article class="report-card reveal-card">
+            <div class="panel-title">
+              <span>05 / 风险与交付提示</span>
+              <strong>模拟输出</strong>
+            </div>
+            <pre id="report-output">点击“启动模拟拆解”后，这里会生成公开模拟版报告。</pre>
+            <div class="action-row">
+              <button class="ghost-button" id="download-table" type="button">导出镜头表</button>
+              <button class="ghost-button" id="copy-shot" type="button">复制当前镜头建议</button>
+              <button class="ghost-button" id="save-version" type="button">保存版本，当前只模拟，不真实入库</button>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <section class="version-panel reveal-card">
+        <div class="panel-title">
+          <span>06 / 版本记录</span>
+          <strong>公开模拟版只展示记录格式</strong>
+        </div>
+        <ol id="version-history"></ol>
+      </section>
+
+      <footer class="demo-notice">
+        当前页面为公开模拟工作台，仅用于展示 Agent 的交互框架和输出结构。
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="tooltip" id="tooltip" role="tooltip"></div>
+
+    <script src="./mock-data.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
