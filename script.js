@@ -7,7 +7,7 @@ const progressIndex = document.querySelector(".progress-index");
 const progressSection = document.querySelector(".progress-section");
 const copyControls = Array.from(document.querySelectorAll("[data-copy-target]"));
 const startupOverlay = document.querySelector(".startup-overlay");
-const folderWindows = Array.from(document.querySelectorAll(".folder-window"));
+const folderWindows = Array.from(document.querySelectorAll(".pdf-window, .report-window"));
 const fileLoader = document.querySelector(".file-loader");
 const fileModal = document.querySelector(".file-modal");
 const fileModalTitle = document.getElementById("file-modal-title");
@@ -20,12 +20,14 @@ const fileCloseControls = Array.from(document.querySelectorAll("[data-file-close
 let ticking = false;
 let videoReady = false;
 let fileOpenTimer = 0;
+const mobileMediaQuery = window.matchMedia("(max-width: 767px), (pointer: coarse)");
+let isMobileExperience = mobileMediaQuery.matches;
 
 const sectionLabels = {
   "00": "首页",
   "01": "四大平台内容研究",
-  "02": "AI 剧本评估",
-  "03": "AI 制片统筹",
+  "02": "剧集开发 Agent",
+  "03": "AI 制片统筹 Agent",
   "04": "AI 导演调研",
   "05": "联系方式",
 };
@@ -53,7 +55,7 @@ const syncVideoToScroll = () => {
     progressDot.style.top = `${progress * 100}%`;
   }
 
-  if (!video || !videoReady || !Number.isFinite(video.duration) || video.duration <= 0) {
+  if (isMobileExperience || !video || !videoReady || !Number.isFinite(video.duration) || video.duration <= 0) {
     return;
   }
 
@@ -112,16 +114,76 @@ const observer = new IntersectionObserver(
 sections.forEach((section) => observer.observe(section));
 setActiveScene(sections[0]);
 
+const syncResponsiveAssets = () => {
+  isMobileExperience = mobileMediaQuery.matches;
+
+  folderWindows.forEach((link) => {
+    const nextHref = isMobileExperience ? link.dataset.mobileHref : link.dataset.desktopHref;
+    if (nextHref) {
+      link.href = nextHref;
+    }
+  });
+
+  if (!video) {
+    return;
+  }
+
+  const nextSrc = isMobileExperience ? video.dataset.mobileSrc : video.dataset.desktopSrc;
+  if (nextSrc && video.getAttribute("src") !== nextSrc) {
+    videoReady = false;
+    video.setAttribute("src", nextSrc);
+    video.load();
+  }
+
+  if (isMobileExperience) {
+    video.removeAttribute("data-scroll-scrub");
+    playMobileVideo();
+  } else {
+    video.setAttribute("data-scroll-scrub", "true");
+    video.pause();
+    requestSync();
+  }
+};
+
+const playMobileVideo = () => {
+  if (!video || !isMobileExperience) {
+    return;
+  }
+
+  video.muted = true;
+  video.loop = true;
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
+  video.play().catch(() => {
+    document.body.classList.remove("video-loaded");
+  });
+};
+
 if (video) {
   video.addEventListener("loadedmetadata", () => {
     videoReady = true;
     document.body.classList.add("video-loaded");
+    if (isMobileExperience) {
+      playMobileVideo();
+      return;
+    }
+
     video.pause();
     syncVideoToScroll();
   });
 
+  video.addEventListener("canplay", () => {
+    if (isMobileExperience) {
+      document.body.classList.add("video-loaded");
+      playMobileVideo();
+    }
+  });
+
   video.addEventListener("timeupdate", () => {
-    video.pause();
+    if (!isMobileExperience) {
+      video.pause();
+    }
   });
 
   video.addEventListener("error", () => {
@@ -130,6 +192,13 @@ if (video) {
   });
 }
 
+if (typeof mobileMediaQuery.addEventListener === "function") {
+  mobileMediaQuery.addEventListener("change", syncResponsiveAssets);
+} else if (typeof mobileMediaQuery.addListener === "function") {
+  mobileMediaQuery.addListener(syncResponsiveAssets);
+}
+
+syncResponsiveAssets();
 window.addEventListener("scroll", requestSync, { passive: true });
 window.addEventListener("resize", requestSync);
 requestSync();
@@ -196,6 +265,10 @@ const openFileModal = (link) => {
 
 folderWindows.forEach((link) => {
   link.addEventListener("click", (event) => {
+    if (isMobileExperience) {
+      return;
+    }
+
     event.preventDefault();
     openFileModal(link);
   });

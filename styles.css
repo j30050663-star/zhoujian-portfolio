@@ -53,6 +53,8 @@ a {
 .video-fallback {
   z-index: 0;
   background:
+    linear-gradient(rgba(10, 9, 8, 0.48), rgba(10, 9, 8, 0.62)),
+    url("./assets/hero-poster.jpg?v=20260704-mobile-fix1") center / cover no-repeat,
     radial-gradient(circle at 74% 22%, rgba(112, 39, 32, 0.34), transparent 24rem),
     radial-gradient(circle at 22% 80%, rgba(95, 82, 74, 0.22), transparent 28rem),
     linear-gradient(118deg, #0a0908 0%, #171312 42%, #2b211d 62%, #0c0b0b 100%);
@@ -85,6 +87,32 @@ a {
 
 .video-loaded .scroll-video {
   opacity: 1;
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  body {
+    min-height: auto;
+  }
+
+  .scroll-video {
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    opacity: 0;
+    transform: none;
+    transition: opacity 400ms ease;
+  }
+
+  .video-loaded .scroll-video {
+    opacity: 1;
+  }
+
+  .video-fallback {
+    background:
+      linear-gradient(rgba(10, 9, 8, 0.36), rgba(10, 9, 8, 0.72)),
+      url("./assets/hero-poster.jpg?v=20260704-mobile-fix1") center / cover no-repeat,
+      linear-gradient(118deg, #0a0908 0%, #171312 48%, #2b211d 70%, #0c0b0b 100%);
+  }
 }
 
 .film-overlay {
@@ -300,6 +328,7 @@ a {
 
 .topline,
 .hero-files,
+.agent-lab,
 .scene-summary,
 .page-footer-note {
   transition:
@@ -528,6 +557,7 @@ a {
 
 .startup-pending .hero-copy,
 .startup-pending .hero-files .folder-window,
+.startup-pending .agent-lab,
 .startup-pending .scene-summary,
 .startup-pending .page-footer-note {
   opacity: 0;
@@ -536,6 +566,7 @@ a {
 
 .startup-ready .hero-copy,
 .startup-ready .hero-files .folder-window,
+.startup-ready .agent-lab,
 .startup-ready .scene-summary,
 .startup-ready .page-footer-note {
   opacity: 1;
@@ -553,17 +584,22 @@ a {
   transition-delay: 220ms;
 }
 
+.startup-ready .agent-lab {
+  transition-delay: 300ms;
+}
+
 .startup-ready .scene-summary {
-  transition-delay: 320ms;
+  transition-delay: 380ms;
 }
 
 .startup-ready .page-footer-note {
-  transition-delay: 420ms;
+  transition-delay: 460ms;
 }
 
 .hero-stage {
   align-content: stretch;
-  grid-template-rows: auto minmax(160px, 1fr) auto auto;
+  grid-template-rows: auto auto auto auto auto;
+  gap: clamp(20px, 4vh, 46px);
   padding-top: clamp(82px, 10vh, 130px);
   padding-bottom: clamp(46px, 8vh, 82px);
 }
@@ -1861,6 +1897,208 @@ h2 {
   outline: none;
 }
 
+.agent-lab {
+  justify-self: center;
+  width: min(72vw, 860px);
+  display: grid;
+  gap: 16px;
+}
+
+.agent-lab__head {
+  display: grid;
+  gap: 8px;
+}
+
+.agent-lab__head h2 {
+  margin: 0;
+  color: rgba(244, 240, 232, 0.9);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  line-height: 1.8;
+}
+
+.agent-lab__head p {
+  max-width: 760px;
+  color: rgba(244, 240, 232, 0.62);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.agent-lab__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: clamp(20px, 4vw, 54px);
+}
+
+.agent-card {
+  min-height: 188px;
+}
+
+.agent-card strong {
+  font-size: clamp(20px, 2vw, 30px);
+}
+
+.agent-card p {
+  max-width: 430px;
+}
+
+.agent-detail-page {
+  min-height: 100vh;
+  color: var(--cold-white);
+  background:
+    linear-gradient(rgba(10, 9, 8, 0.72), rgba(10, 9, 8, 0.88)),
+    url("./assets/hero-poster.jpg?v=20260704-mobile-fix1") center / cover fixed no-repeat,
+    var(--black);
+}
+
+.agent-detail-page::before,
+.agent-detail-page::after {
+  position: fixed;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.agent-detail-page::before {
+  z-index: 0;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(rgba(244, 240, 232, 0.18) 0.7px, transparent 0.8px),
+    linear-gradient(rgba(244, 240, 232, 0.07) 1px, transparent 1px);
+  background-size: 4px 4px, 100% 8px;
+}
+
+.agent-detail-page::after {
+  z-index: 1;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(58, 23, 21, 0.28), transparent 24rem),
+    radial-gradient(circle at 26% 78%, rgba(244, 240, 232, 0.06), transparent 28rem);
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.84);
+}
+
+.agent-page {
+  position: relative;
+  z-index: 2;
+  width: min(1180px, calc(100vw - 44px));
+  margin: 0 auto;
+  padding: clamp(88px, 12vh, 132px) 0 clamp(56px, 9vh, 96px);
+}
+
+.agent-page__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: clamp(76px, 12vh, 128px);
+  color: rgba(244, 240, 232, 0.58);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+
+.agent-page__nav a {
+  border-bottom: 1px solid rgba(244, 240, 232, 0.18);
+  padding-bottom: 6px;
+}
+
+.agent-page__nav a:hover,
+.agent-page__nav a:focus-visible {
+  color: var(--cold-white);
+  outline: none;
+}
+
+.agent-page__hero {
+  display: grid;
+  gap: 22px;
+  margin-bottom: clamp(46px, 8vh, 86px);
+}
+
+.agent-page__index {
+  color: rgba(244, 240, 232, 0.6);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+
+.agent-page__hero h1 {
+  max-width: 1050px;
+  font-size: clamp(48px, 8vw, 116px);
+  font-weight: 330;
+  line-height: 0.98;
+}
+
+.agent-page__subtitle {
+  color: rgba(244, 240, 232, 0.84);
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1.5;
+}
+
+.agent-page__intro {
+  max-width: 930px;
+  color: rgba(244, 240, 232, 0.72);
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.9;
+}
+
+.agent-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+}
+
+.agent-page__block {
+  border: 1px solid rgba(244, 240, 232, 0.16);
+  background:
+    linear-gradient(180deg, rgba(244, 240, 232, 0.055), rgba(0, 0, 0, 0.18)),
+    rgba(10, 9, 8, 0.48);
+  padding: clamp(22px, 3vw, 34px);
+}
+
+.agent-page__block--wide {
+  grid-column: 1 / -1;
+}
+
+.agent-page__block span,
+.agent-page__block li::marker {
+  color: rgba(194, 121, 83, 0.9);
+}
+
+.agent-page__block span {
+  display: block;
+  margin-bottom: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+
+.agent-page__block h2 {
+  margin: 0 0 18px;
+  font-size: clamp(24px, 3vw, 42px);
+  font-weight: 340;
+  line-height: 1.16;
+}
+
+.agent-page__block p,
+.agent-page__block li {
+  color: rgba(244, 240, 232, 0.72);
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.agent-page__block ul,
+.agent-page__flow {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.agent-page__demo {
+  display: grid;
+  gap: 16px;
+  border-left: 1px solid rgba(244, 240, 232, 0.24);
+  padding-left: 22px;
+}
+
 @keyframes folderScan {
   from {
     transform: translateY(0);
@@ -2234,6 +2472,8 @@ h2 {
 
   .scene-summary,
   .hero-files,
+  .agent-lab,
+  .agent-lab__grid,
   .scene-platform__intro-grid,
   .platform-research,
   .platform-panel__grid,
@@ -2371,6 +2611,23 @@ h2 {
   .contact-label {
     grid-column: 1 / -1;
   }
+
+  .agent-lab {
+    justify-self: stretch;
+  }
+
+  .agent-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-page__nav {
+    flex-direction: column;
+    margin-bottom: 54px;
+  }
+
+  .agent-page__hero h1 {
+    font-size: clamp(40px, 13vw, 72px);
+  }
 }
 
 @media (hover: none) {
@@ -2402,6 +2659,7 @@ h2 {
 
   .startup-pending .hero-copy,
   .startup-pending .hero-files .folder-window,
+  .startup-pending .agent-lab,
   .startup-pending .scene-summary,
   .startup-pending .page-footer-note {
     opacity: 1;

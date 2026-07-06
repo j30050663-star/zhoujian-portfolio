@@ -8,16 +8,22 @@
       name="description"
       content="周简的影视制片与 AI 制片方向网页作品集首页。"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260704-no-sound1" />
+    <link rel="stylesheet" href="./styles.css?v=20260705-agent-lab1" />
   </head>
   <body class="cinematic-production-home startup-pending">
     <div class="video-fallback" aria-hidden="true"></div>
     <video
       class="scroll-video"
-      src="./assets/hero-scroll.mp4?v=20260703-video3"
+      src="./assets/hero-scroll.mp4?v=20260704-mobile-fix1"
+      data-desktop-src="./assets/hero-scroll.mp4?v=20260704-mobile-fix1"
+      data-mobile-src="./assets/hero-scroll-mobile.mp4?v=20260704-mobile-fix1"
+      poster="./assets/hero-poster.jpg?v=20260704-mobile-fix1"
       preload="metadata"
+      autoplay
+      loop
       muted
       playsinline
+      webkit-playsinline
       aria-label="夜间片场滚动视频背景"
     ></video>
     <div class="film-overlay" aria-hidden="true"></div>
@@ -35,8 +41,8 @@
     <header class="topline" aria-label="作品集导航">
       <a href="#home" data-preview="系统首页 / 文件入口 / 制片控制台">00 / 首页</a>
       <a href="#platform" data-preview="平台案例 / 内容策略 / 项目判断">01 / 四大平台内容研究</a>
-      <a href="#lab" data-preview="故事成立 / 平台匹配 / 市场转化">02 / AI剧本评估</a>
-      <a href="#production" data-preview="镜头判断 / 成本控制 / 成片交付">03 / AI制片统筹</a>
+      <a href="#lab" data-preview="故事成立 / 平台匹配 / 市场转化">02 / 剧集开发 Agent</a>
+      <a href="#production" data-preview="镜头判断 / 成本控制 / 成片交付">03 / AI 制片统筹 Agent</a>
       <a href="#research" data-preview="影像风格 / 提示词方法 / AI 作者研究">04 / AI导演调研</a>
       <a href="#contact" data-preview="复制联系方式 / 打开文件 / 联系我">05 / 联系方式</a>
     </header>
@@ -94,6 +100,8 @@
             <a
               class="folder-window pdf-window"
               href="./assets/zhou-jian-ai-portfolio.pdf"
+              data-desktop-href="./assets/zhou-jian-ai-portfolio.pdf"
+              data-mobile-href="./assets/zhou-jian-ai-portfolio-mobile.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -108,6 +116,8 @@
             <a
               class="folder-window report-window"
               href="./assets/monthly-viewing-report.pdf"
+              data-desktop-href="./assets/monthly-viewing-report.pdf"
+              data-mobile-href="./assets/monthly-viewing-report-mobile.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -120,6 +130,33 @@
               <span class="folder-action">点击打开文件</span>
             </a>
           </div>
+
+          <section class="agent-lab" aria-labelledby="agent-lab-title">
+            <div class="agent-lab__head">
+              <h2 id="agent-lab-title">AI Agent Lab</h2>
+              <p>我把影视制片、剧本审读和 AI 视频生产流程，整理成可以展示、追踪和复盘的 Agent 原型。</p>
+            </div>
+            <div class="agent-lab__grid">
+              <a class="folder-window agent-card" href="script-agent-simulator/index.html">
+                <span class="folder-tab">
+                  <span class="folder-tab-default">02 / Agent 模拟入口</span>
+                  <span class="folder-tab-ready">状态 / 可打开</span>
+                </span>
+                <strong>剧集开发与投资判断 Agent</strong>
+                <p>上传小说、故事梗概或剧本材料，模拟生成项目判断结果。</p>
+                <span class="folder-action">进入模拟工作台</span>
+              </a>
+              <a class="folder-window agent-card" href="ai-production-simulator/index.html">
+                <span class="folder-tab">
+                  <span class="folder-tab-default">03 / Agent 模拟入口</span>
+                  <span class="folder-tab-ready">状态 / 可打开</span>
+                </span>
+                <strong>AI 制片统筹 Agent</strong>
+                <p>输入剧本片段或镜头需求，模拟拆解 AI / 真人 / CG 边界，并生成镜头生产表、模型建议和交付风险。</p>
+                <span class="folder-action">进入模拟工作台</span>
+              </a>
+            </div>
+          </section>
 
           <div class="scene-summary">
             <article>
@@ -244,9 +281,9 @@
         </div>
       </section>
 
-      <section class="scene script-agent-scene" id="lab" data-section="AI 剧本评估" data-scene="02">
+      <section class="scene script-agent-scene" id="lab" data-section="剧集开发 Agent" data-scene="02">
         <div class="scene-stage script-agent__inner">
-          <div class="script-agent__eyebrow">02 / AI 剧本评估</div>
+          <div class="script-agent__eyebrow">02 / 剧集开发 Agent</div>
 
           <header class="script-agent__hero">
             <h2 class="script-agent__title">我把制片判断整理成 AI 剧本评估</h2>
@@ -325,9 +362,9 @@
         </div>
       </section>
 
-      <section class="scene ai-production-scene" id="production" data-section="AI 制片统筹" data-scene="03">
+      <section class="scene ai-production-scene" id="production" data-section="AI 制片统筹 Agent" data-scene="03">
         <div class="scene-stage ai-production__inner">
-          <div class="ai-production__eyebrow">03 / AI制片统筹</div>
+          <div class="ai-production__eyebrow">03 / AI 制片统筹 Agent</div>
 
           <header class="ai-production__hero">
             <div>
@@ -503,6 +540,6 @@
       </section>
     </main>
 
-    <script src="./script.js?v=20260704-no-sound1"></script>
+    <script src="./script.js?v=20260705-agent-lab1"></script>
   </body>
 </html>
