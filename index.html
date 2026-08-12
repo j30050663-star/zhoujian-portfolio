@@ -3,12 +3,59 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>周简 | AI影视制片作品集</title>
+    <title>周简｜影视制片与 AI 制片作品集</title>
     <meta
       name="description"
-      content="周简的影视制片与 AI 制片方向网页作品集首页。"
+      content="周简的影视制片与 AI 制片作品集，展示平台内容判断、剧集开发、AI 制片统筹、Agent 模拟工作台与原创 AI 短片《晚风渐熟》。"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260705-agent-lab1" />
+    <meta name="author" content="周简" />
+    <meta name="theme-color" content="#080807" />
+    <link rel="canonical" href="https://www.zhoujianstudio.com/" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="周简作品集" />
+    <meta property="og:title" content="周简｜影视制片与 AI 制片作品集" />
+    <meta
+      property="og:description"
+      content="从平台内容判断、剧集开发到 AI 制片统筹与原创短片，查看周简如何把内容、制作、成本和交付放在一起判断。"
+    />
+    <meta property="og:url" content="https://www.zhoujianstudio.com/" />
+    <meta
+      property="og:image"
+      content="https://www.zhoujianstudio.com/assets/hero-poster.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://www.zhoujianstudio.com/assets/hero-poster.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content="周简影视制片与 AI 制片作品集首页" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="周简｜影视制片与 AI 制片作品集" />
+    <meta
+      name="twitter:description"
+      content="平台内容判断、剧集开发、AI 制片统筹、Agent 模拟工作台与原创 AI 短片。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.zhoujianstudio.com/assets/hero-poster.jpg"
+    />
+
+    <meta itemprop="name" content="周简｜影视制片与 AI 制片作品集" />
+    <meta
+      itemprop="description"
+      content="平台内容判断、剧集开发、AI 制片统筹、Agent 模拟工作台与原创 AI 短片。"
+    />
+    <meta
+      itemprop="image"
+      content="https://www.zhoujianstudio.com/assets/hero-poster.jpg"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260810-film1" />
   </head>
   <body class="cinematic-production-home startup-pending">
     <div class="video-fallback" aria-hidden="true"></div>
@@ -16,7 +63,7 @@
       class="scroll-video"
       src="./assets/hero-scroll.mp4?v=20260704-mobile-fix1"
       data-desktop-src="./assets/hero-scroll.mp4?v=20260704-mobile-fix1"
-      data-mobile-src="./assets/hero-scroll-mobile.mp4?v=20260704-mobile-fix1"
+      data-mobile-src="./assets/hero-scroll.mp4?v=20260704-video1"
       poster="./assets/hero-poster.jpg?v=20260704-mobile-fix1"
       preload="metadata"
       autoplay
@@ -41,10 +88,11 @@
     <header class="topline" aria-label="作品集导航">
       <a href="#home" data-preview="系统首页 / 文件入口 / 制片控制台">00 / 首页</a>
       <a href="#platform" data-preview="平台案例 / 内容策略 / 项目判断">01 / 四大平台内容研究</a>
-      <a href="#lab" data-preview="故事成立 / 平台匹配 / 市场转化">02 / 剧集开发 Agent</a>
+      <a href="#lab" data-preview="故事成立 / 平台匹配 / 市场转化">02 / 剧集开发与投资判断 Agent</a>
       <a href="#production" data-preview="镜头判断 / 成本控制 / 成片交付">03 / AI 制片统筹 Agent</a>
-      <a href="#research" data-preview="影像风格 / 提示词方法 / AI 作者研究">04 / AI导演调研</a>
-      <a href="#contact" data-preview="复制联系方式 / 打开文件 / 联系我">05 / 联系方式</a>
+      <a href="#film" data-preview="原创短片 / 成片观看 / 制作验证">04 / AI 原创短片</a>
+      <a href="#research" data-preview="影像风格 / 提示词方法 / AI 作者研究">05 / AI导演调研</a>
+      <a href="#contact" data-preview="复制联系方式 / 打开文件 / 联系我">06 / 联系方式</a>
     </header>
 
     <aside class="scroll-progress" aria-label="滚动进度">
@@ -64,7 +112,7 @@
 
     <section class="file-modal" hidden role="dialog" aria-modal="true" aria-labelledby="file-modal-title">
       <div class="file-modal__backdrop" data-file-close></div>
-      <div class="file-modal__panel">
+      <div class="file-modal__panel" tabindex="-1">
         <button class="file-modal__close" type="button" data-file-close aria-label="关闭文件预览">关闭</button>
         <div class="file-modal__head">
           <span>档案窗口</span>
@@ -99,9 +147,9 @@
           <div class="hero-files" aria-label="作品集文件夹入口">
             <a
               class="folder-window pdf-window"
-              href="./assets/zhou-jian-ai-portfolio.pdf"
-              data-desktop-href="./assets/zhou-jian-ai-portfolio.pdf"
-              data-mobile-href="./assets/zhou-jian-ai-portfolio-mobile.pdf"
+              href="./assets/zhou-jian-ai-portfolio.pdf?v=20260810"
+              data-desktop-href="./assets/zhou-jian-ai-portfolio.pdf?v=20260810"
+              data-mobile-href="./assets/zhou-jian-ai-portfolio-mobile.pdf?v=20260810"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -131,33 +179,6 @@
             </a>
           </div>
 
-          <section class="agent-lab" aria-labelledby="agent-lab-title">
-            <div class="agent-lab__head">
-              <h2 id="agent-lab-title">AI Agent Lab</h2>
-              <p>我把影视制片、剧本审读和 AI 视频生产流程，整理成可以展示、追踪和复盘的 Agent 原型。</p>
-            </div>
-            <div class="agent-lab__grid">
-              <a class="folder-window agent-card" href="script-agent-simulator/index.html">
-                <span class="folder-tab">
-                  <span class="folder-tab-default">02 / Agent 模拟入口</span>
-                  <span class="folder-tab-ready">状态 / 可打开</span>
-                </span>
-                <strong>剧集开发与投资判断 Agent</strong>
-                <p>上传小说、故事梗概或剧本材料，模拟生成项目判断结果。</p>
-                <span class="folder-action">进入模拟工作台</span>
-              </a>
-              <a class="folder-window agent-card" href="ai-production-simulator/index.html">
-                <span class="folder-tab">
-                  <span class="folder-tab-default">03 / Agent 模拟入口</span>
-                  <span class="folder-tab-ready">状态 / 可打开</span>
-                </span>
-                <strong>AI 制片统筹 Agent</strong>
-                <p>输入剧本片段或镜头需求，模拟拆解 AI / 真人 / CG 边界，并生成镜头生产表、模型建议和交付风险。</p>
-                <span class="folder-action">进入模拟工作台</span>
-              </a>
-            </div>
-          </section>
-
           <div class="scene-summary">
             <article>
               <span>角色</span>
@@ -176,12 +197,48 @@
         </div>
       </section>
 
+      <section class="agent-lab-section" aria-labelledby="agent-lab-title">
+        <div class="agent-lab">
+          <div class="agent-lab__head">
+            <p class="scene-index">Agent 入口 / 工作台</p>
+            <h2 id="agent-lab-title">AI Agent Lab</h2>
+            <p>我把影视制片、剧本审读和 AI 视频生产流程，整理成可以展示、追踪和检查的 Agent 原型。</p>
+          </div>
+          <div class="agent-lab__grid">
+            <article class="folder-window agent-card">
+              <span class="folder-tab">
+                <span class="folder-tab-default">02 / Agent 入口</span>
+                <span class="folder-tab-ready">状态 / 可打开</span>
+              </span>
+              <strong>剧集开发与投资判断 Agent</strong>
+              <p>上传小说、故事梗概或剧本材料，模拟生成项目判断结果。</p>
+              <div class="agent-card__actions">
+                <a href="agents/script-agent/index.html">查看方法说明</a>
+                <a href="script-agent-simulator/index.html">进入模拟工作台</a>
+              </div>
+            </article>
+            <article class="folder-window agent-card">
+              <span class="folder-tab">
+                <span class="folder-tab-default">03 / Agent 入口</span>
+                <span class="folder-tab-ready">状态 / 可打开</span>
+              </span>
+              <strong>AI 制片统筹 Agent</strong>
+              <p>输入剧本片段或镜头需求，模拟拆解 AI / 真人 / CG 边界，并生成镜头生产表、模型建议和交付风险。</p>
+              <div class="agent-card__actions">
+                <a href="agents/ai-production-agent/index.html">查看方法说明</a>
+                <a href="ai-production-simulator/index.html">进入模拟工作台</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="scene scene-platform" id="platform" data-section="四大平台内容研究" data-scene="01">
         <div class="scene-stage scene-platform__inner">
           <div class="scene-platform__eyebrow">01 / 四大平台内容研究</div>
 
           <div class="scene-platform__hero">
-            <h2 class="scene-platform__title">
+            <h2 class="scene-platform__title mobile-wrap-title">
               从公开案例看平台怎样选择、包装和验证项目
             </h2>
             <p class="scene-platform__subtitle">
@@ -231,8 +288,8 @@
             <div class="platform-research__left">
               <div class="platform-research__label">平台判断样本</div>
 
-              <div class="platform-tabs">
-                <button class="platform-tab is-active" data-platform="tencent" type="button">
+              <div class="platform-tabs" role="tablist" aria-label="四大平台内容研究">
+                <button class="platform-tab is-active" id="platform-tab-tencent" data-platform="tencent" type="button" role="tab" aria-controls="platform-panel" aria-selected="true" tabindex="0">
                   <span class="platform-tab__logo-wrap">
                     <img src="./assets/logos/tencent-video.svg" alt="腾讯视频 logo" class="platform-tab__logo" />
                   </span>
@@ -242,7 +299,7 @@
                   </span>
                 </button>
 
-                <button class="platform-tab" data-platform="iqiyi" type="button">
+                <button class="platform-tab" id="platform-tab-iqiyi" data-platform="iqiyi" type="button" role="tab" aria-controls="platform-panel" aria-selected="false" tabindex="-1">
                   <span class="platform-tab__logo-wrap">
                     <img src="./assets/logos/iqiyi.svg" alt="爱奇艺 logo" class="platform-tab__logo" />
                   </span>
@@ -252,7 +309,7 @@
                   </span>
                 </button>
 
-                <button class="platform-tab" data-platform="youku" type="button">
+                <button class="platform-tab" id="platform-tab-youku" data-platform="youku" type="button" role="tab" aria-controls="platform-panel" aria-selected="false" tabindex="-1">
                   <span class="platform-tab__logo-wrap">
                     <img src="./assets/logos/youku.svg" alt="优酷 logo" class="platform-tab__logo" />
                   </span>
@@ -262,7 +319,7 @@
                   </span>
                 </button>
 
-                <button class="platform-tab" data-platform="mango" type="button">
+                <button class="platform-tab" id="platform-tab-mango" data-platform="mango" type="button" role="tab" aria-controls="platform-panel" aria-selected="false" tabindex="-1">
                   <span class="platform-tab__logo-wrap">
                     <img src="./assets/logos/mangotv.svg" alt="芒果TV logo" class="platform-tab__logo" />
                   </span>
@@ -275,18 +332,18 @@
             </div>
 
             <div class="platform-research__right">
-              <div class="platform-panel" id="platform-panel" aria-live="polite"></div>
+              <div class="platform-panel" id="platform-panel" role="tabpanel" aria-labelledby="platform-tab-tencent" aria-live="polite"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="scene script-agent-scene" id="lab" data-section="剧集开发 Agent" data-scene="02">
+      <section class="scene script-agent-scene" id="lab" data-section="剧集开发与投资判断 Agent" data-scene="02">
         <div class="scene-stage script-agent__inner">
-          <div class="script-agent__eyebrow">02 / 剧集开发 Agent</div>
+          <div class="script-agent__eyebrow">02 / 剧集开发与投资判断 Agent</div>
 
           <header class="script-agent__hero">
-            <h2 class="script-agent__title">我把制片判断整理成 AI 剧本评估</h2>
+            <h2 class="script-agent__title mobile-wrap-title">我把制片判断整理成剧集开发与投资判断 Agent</h2>
             <p class="script-agent__subtitle">
               这不是炫工具，而是把剧集公司在项目开发里真正要问的问题，整理成可以反复使用的判断方法：内容本身值不值得继续做，如果内容成立，它能不能被市场、平台和观众接住。
             </p>
@@ -319,45 +376,45 @@
           </div>
 
           <div class="script-agent-console">
-            <aside class="script-agent-tabs" aria-label="AI 剧本评估模块">
-              <button class="script-agent-tab is-active" type="button" data-agent-tab="stage">
+            <aside class="script-agent-tabs" role="tablist" aria-label="剧集开发与投资判断模块">
+              <button class="script-agent-tab is-active" id="script-tab-stage" type="button" data-agent-tab="stage" role="tab" aria-controls="script-agent-panel" aria-selected="true" tabindex="0">
                 <span>01</span>
                 <strong>按项目阶段判断</strong>
                 <em>不同材料不用同一把尺子</em>
               </button>
 
-              <button class="script-agent-tab" type="button" data-agent-tab="content">
+              <button class="script-agent-tab" id="script-tab-content" type="button" data-agent-tab="content" role="tab" aria-controls="script-agent-panel" aria-selected="false" tabindex="-1">
                 <span>02</span>
                 <strong>内容成立判断</strong>
                 <em>观众入口 / 长剧支撑 / 公司价值</em>
               </button>
 
-              <button class="script-agent-tab" type="button" data-agent-tab="jury">
+              <button class="script-agent-tab" id="script-tab-jury" type="button" data-agent-tab="jury" role="tab" aria-controls="script-agent-panel" aria-selected="false" tabindex="-1">
                 <span>03</span>
                 <strong>多评委审读</strong>
                 <em>不是投票，而是找出关键风险</em>
               </button>
 
-              <button class="script-agent-tab" type="button" data-agent-tab="female">
+              <button class="script-agent-tab" id="script-tab-female" type="button" data-agent-tab="female" role="tab" aria-controls="script-agent-panel" aria-selected="false" tabindex="-1">
                 <span>04</span>
                 <strong>大女主专项</strong>
                 <em>不看营销标签，只看剧情证据</em>
               </button>
 
-              <button class="script-agent-tab" type="button" data-agent-tab="market">
+              <button class="script-agent-tab" id="script-tab-market" type="button" data-agent-tab="market" role="tab" aria-controls="script-agent-panel" aria-selected="false" tabindex="-1">
                 <span>05</span>
                 <strong>市场平台转化</strong>
                 <em>平台、宣发和商业钩子</em>
               </button>
 
-              <button class="script-agent-tab" type="button" data-agent-tab="output">
+              <button class="script-agent-tab" id="script-tab-output" type="button" data-agent-tab="output" role="tab" aria-controls="script-agent-panel" aria-selected="false" tabindex="-1">
                 <span>06</span>
                 <strong>最终输出</strong>
                 <em>继续、修改、补证据或止损</em>
               </button>
             </aside>
 
-            <main class="script-agent-panel" id="script-agent-panel" aria-live="polite"></main>
+            <main class="script-agent-panel" id="script-agent-panel" role="tabpanel" aria-labelledby="script-tab-stage" aria-live="polite"></main>
           </div>
         </div>
       </section>
@@ -368,7 +425,7 @@
 
           <header class="ai-production__hero">
             <div>
-              <h2 class="ai-production__title">
+              <h2 class="ai-production__title mobile-wrap-title">
                 AI 进入制作后 真正要管的是判断 成本和交付
               </h2>
               <p class="ai-production__subtitle">
@@ -391,17 +448,18 @@
             <span>角色设定</span>
             <span>场景设定</span>
             <span>影像风格参考</span>
+            <span>模型策略</span>
             <span>后期交付标准</span>
             <span>授权要求</span>
           </div>
 
           <div class="production-board">
-            <aside class="production-board__flow" aria-label="AI 制片统筹模块">
+            <aside class="production-board__flow" role="tablist" aria-label="AI 制片统筹模块">
               <div class="flow-line" aria-hidden="true">
                 <span class="flow-line__pulse"></span>
               </div>
 
-              <button class="flow-node is-active" type="button" data-production-module="classify">
+              <button class="flow-node is-active" id="production-tab-classify" type="button" data-production-module="classify" role="tab" aria-controls="production-module-panel" aria-selected="true" tabindex="0">
                 <span class="flow-node__index">01</span>
                 <span class="flow-node__content">
                   <strong>镜头归类与制作方式判断</strong>
@@ -409,15 +467,15 @@
                 </span>
               </button>
 
-              <button class="flow-node" type="button" data-production-module="task">
+              <button class="flow-node" id="production-tab-task" type="button" data-production-module="task" role="tab" aria-controls="production-module-panel" aria-selected="false" tabindex="-1">
                 <span class="flow-node__index">02</span>
                 <span class="flow-node__content">
                   <strong>AI 镜头任务单与生成管理</strong>
-                  <em>提示词 / 模型 / 轮次 / 成本 / 停止条件</em>
+                  <em>提示词 / 模型 / 资产 / 轮次 / 成本 / 停止条件</em>
                 </span>
               </button>
 
-              <button class="flow-node" type="button" data-production-module="handoff">
+              <button class="flow-node" id="production-tab-handoff" type="button" data-production-module="handoff" role="tab" aria-controls="production-module-panel" aria-selected="false" tabindex="-1">
                 <span class="flow-node__index">03</span>
                 <span class="flow-node__content">
                   <strong>成片交接与风险检查</strong>
@@ -426,7 +484,7 @@
               </button>
             </aside>
 
-            <main class="production-board__panel" id="production-module-panel" aria-live="polite"></main>
+            <main class="production-board__panel" id="production-module-panel" role="tabpanel" aria-labelledby="production-tab-classify" aria-live="polite"></main>
           </div>
 
           <div class="ai-production__review">
@@ -450,13 +508,94 @@
             <p>
               AI 可以提高效率，但不能替代制片判断。真正重要的不是生成更多画面，而是知道哪些画面值得生成，哪些画面必须停下来交给人处理，哪些素材具备进入正式后期的交付条件。
             </p>
+            <a class="production-proof-link" href="#film">查看最终成片 / 《晚风渐熟》</a>
           </footer>
         </div>
       </section>
 
-      <section class="scene" id="research" data-section="AI 导演调研" data-scene="04">
+      <section class="scene film-scene" id="film" data-section="AI 原创短片" data-scene="04">
+        <div class="scene-stage film-stage">
+          <p class="scene-index">04 / AI 原创短片</p>
+
+          <header class="film-heading">
+            <div>
+              <span class="film-kicker">个人 AI 叙事短片 / 最终成片 / 2026</span>
+              <h2>《晚风渐熟》</h2>
+            </div>
+            <p class="film-logline">
+              一部歌手十周年纪录片，迫使习惯用工作回避感情的制片人面对十年前的未答之问，也面对眼前不愿再替他追问的人。
+            </p>
+          </header>
+
+          <figure class="film-hero">
+            <img src="./assets/wanfeng-jian-shu-key-visual.jpg" alt="AI 原创短片《晚风渐熟》主视觉" />
+            <button class="film-play" type="button" aria-controls="wanfeng-film" aria-expanded="false">
+              <span aria-hidden="true">▶</span>
+              <span class="film-play-label">播放最终成片</span>
+            </button>
+          </figure>
+
+          <div class="film-player" hidden>
+            <video id="wanfeng-film" controls preload="metadata" poster="./assets/wanfeng-jian-shu-key-visual.jpg">
+              <source src="./assets/wanfeng-jian-shu-film.mp4?v=20260810-final" type="video/mp4" />
+              当前浏览器无法播放这支短片。
+            </video>
+          </div>
+
+          <div class="film-meta" aria-label="短片项目信息">
+            <article><span>当前状态</span><p>最终成片 / 已完成</p></article>
+            <article><span>类型</span><p>都市情感 / AI 叙事短片</p></article>
+            <article><span>时长</span><p>1 分 53 秒</p></article>
+            <article><span>制作方式</span><p>AI 影像生成 / 配音与声音设计 / 后期剪辑</p></article>
+            <article><span>我的工作</span><p>编剧开发、制片统筹、视觉资产、镜头生成、剪辑与交付</p></article>
+          </div>
+
+          <div class="film-statement">
+            <span>故事梗概</span>
+            <p>
+              纪录片制片人沈砚正在为旧日恋人、歌手 Rin 制作出道十周年纪录片。参与项目的编剧周晓雨从一段十年前的旧电梯录音和五年前的发布会回答里，看见沈砚一直用工作与“为对方好”回避真正的关系选择。纪录片试映结束后，她把关于 Rin 的取舍重新问回两个人之间，也拒绝继续替沈砚说出答案。直到雨后的河岸夜路，沈砚第一次放下工作，主动说出自己仍想见她；周晓雨没有替他把话说完，只要求他以后别再等她追问。
+            </p>
+          </div>
+
+          <div class="film-statement">
+            <span>制作说明</span>
+            <p>
+              短片以“同一个问题在两段关系中重复”为叙事线索，用现代电梯、十年前的旧电梯、周晓雨住处、Rin 发布会、空放映厅和河岸夜路连接现在、十年前与五年前三层时间。我把剧本拆成可生产的镜头，建立三位人物、多套服装和多个空间的视觉资产，再按表演、双人调度、镜面反射与场景连续性的难度安排生成测试。后期处理包括失败镜头替换、人物与服装一致性检查、对白配音、环境声、字幕、剪辑和 4K 成片输出，用一支完整短片验证 AI 制片统筹 Agent 中关于判断、成本与交付的工作方法。
+            </p>
+          </div>
+
+          <div class="film-stills" aria-label="《晚风渐熟》成片静帧">
+            <figure class="film-still film-still--wide">
+              <img src="./assets/wanfeng-still-river-wide.jpg" alt="《晚风渐熟》江边夜景远景" loading="lazy" />
+              <figcaption>江边夜景 / 关系停顿</figcaption>
+            </figure>
+            <figure class="film-still">
+              <img src="./assets/wanfeng-still-river-close.jpg" alt="《晚风渐熟》江边人物近景" loading="lazy" />
+              <figcaption>人物近景 / 情绪靠近</figcaption>
+            </figure>
+            <figure class="film-still">
+              <img src="./assets/wanfeng-still-modern-elevator.jpg" alt="《晚风渐熟》现代电梯场景" loading="lazy" />
+              <figcaption>现代电梯 / 现实空间</figcaption>
+            </figure>
+            <figure class="film-still film-still--tall">
+              <img src="./assets/wanfeng-still-old-elevator.jpg" alt="《晚风渐熟》旧电梯场景" loading="lazy" />
+              <figcaption>旧电梯 / 记忆空间</figcaption>
+            </figure>
+            <figure class="film-still">
+              <img src="./assets/wanfeng-still-press-conference.jpg" alt="《晚风渐熟》发布会场景" loading="lazy" />
+              <figcaption>发布会 / 公共凝视</figcaption>
+            </figure>
+            <figure class="film-still film-still--wide">
+              <img src="./assets/wanfeng-still-screening-room.jpg" alt="《晚风渐熟》放映厅场景" loading="lazy" />
+              <figcaption>放映厅 / 关系余波</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="research" data-section="AI 导演调研" data-scene="05">
         <div class="scene-stage research-stage">
-          <p class="scene-index">04 / AI导演调研</p>
+          <p class="scene-index">05 / AI导演调研</p>
           <div class="scene-copy">
             <h2 class="research-title single-line-title">我看 AI 影像创作者不是比谁画面更酷</h2>
             <p class="single-line-copy">
@@ -501,9 +640,9 @@
         </div>
       </section>
 
-      <section class="scene contact-scene" id="contact" data-section="Contact" data-scene="05">
+      <section class="scene contact-scene" id="contact" data-section="Contact" data-scene="06">
         <div class="scene-stage contact-stage">
-          <p class="scene-index">05 / 联系方式</p>
+          <p class="scene-index">06 / 联系方式</p>
           <div class="scene-copy">
             <h2>感谢观看期待您的联系!</h2>
             <p>
@@ -540,6 +679,6 @@
       </section>
     </main>
 
-    <script src="./script.js?v=20260705-agent-lab1"></script>
+    <script src="./script.js?v=20260810-film1"></script>
   </body>
 </html>
