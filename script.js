@@ -16,21 +16,45 @@ const fileModalLoad = document.querySelector(".file-modal__load");
 const fileModalDownload = document.querySelector(".file-modal__download");
 const fileModalOpen = document.querySelector(".file-modal__open");
 const fileCloseControls = Array.from(document.querySelectorAll("[data-file-close]"));
+const fileModalPanel = document.querySelector(".file-modal__panel");
 
 let ticking = false;
 let videoReady = false;
 let fileOpenTimer = 0;
+let lastModalTrigger = null;
 const mobileMediaQuery = window.matchMedia("(max-width: 767px), (pointer: coarse)");
 let isMobileExperience = mobileMediaQuery.matches;
 
 const sectionLabels = {
   "00": "首页",
   "01": "四大平台内容研究",
-  "02": "剧集开发 Agent",
+  "02": "剧集开发与投资判断 Agent",
   "03": "AI 制片统筹 Agent",
-  "04": "AI 导演调研",
-  "05": "联系方式",
+  "04": "AI 原创短片",
+  "05": "AI 导演调研",
+  "06": "联系方式",
 };
+
+const filmPlayControl = document.querySelector(".film-play");
+const filmPlayLabel = document.querySelector(".film-play-label");
+const filmPlayer = document.querySelector(".film-player");
+const portfolioFilm = document.getElementById("wanfeng-film");
+
+if (filmPlayControl && filmPlayLabel && filmPlayer && portfolioFilm) {
+  filmPlayControl.addEventListener("click", () => {
+    const willOpen = filmPlayer.hidden;
+    filmPlayer.hidden = !willOpen;
+    filmPlayControl.setAttribute("aria-expanded", String(willOpen));
+    filmPlayLabel.textContent = willOpen ? "收起最终成片" : "播放最终成片";
+
+    if (willOpen) {
+      filmPlayer.scrollIntoView({ behavior: "smooth", block: "center" });
+      portfolioFilm.play().catch(() => {});
+    } else {
+      portfolioFilm.pause();
+    }
+  });
+}
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -213,6 +237,18 @@ const finishStartup = () => {
 
 window.setTimeout(finishStartup, 1350);
 
+const getFocusableModalElements = () => {
+  if (!fileModal || fileModal.hidden) {
+    return [];
+  }
+
+  return Array.from(
+    fileModal.querySelectorAll(
+      'a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((element) => element instanceof HTMLElement && !element.hidden);
+};
+
 const closeFileModal = () => {
   window.clearTimeout(fileOpenTimer);
   if (fileLoader) {
@@ -226,6 +262,11 @@ const closeFileModal = () => {
     fileModalFrame.removeAttribute("src");
     fileModalFrame.removeAttribute("data-preview-src");
   }
+  document.body.classList.remove("modal-open");
+  if (lastModalTrigger instanceof HTMLElement) {
+    lastModalTrigger.focus();
+  }
+  lastModalTrigger = null;
 };
 
 const openFileModal = (link) => {
@@ -246,6 +287,7 @@ const openFileModal = (link) => {
     : isProductionPortfolio
       ? "周简制片作品集.pdf"
       : "";
+  lastModalTrigger = link;
   fileModalTitle.textContent = fileTitle;
   fileModal.classList.remove("is-previewing");
   fileModalFrame.removeAttribute("src");
@@ -255,11 +297,13 @@ const openFileModal = (link) => {
   fileModalOpen.href = link.href;
   fileLoader.hidden = false;
   fileModal.hidden = true;
+  document.body.classList.add("modal-open");
 
   window.clearTimeout(fileOpenTimer);
   fileOpenTimer = window.setTimeout(() => {
     fileLoader.hidden = true;
     fileModal.hidden = false;
+    fileModalPanel?.focus();
   }, 600);
 };
 
@@ -291,6 +335,38 @@ fileCloseControls.forEach((control) => {
 });
 
 window.addEventListener("keydown", (event) => {
+  const modalIsOpen = Boolean(fileModal && !fileModal.hidden);
+
+  if (modalIsOpen) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeFileModal();
+      return;
+    }
+
+    if (event.key === "Tab") {
+      const focusable = getFocusableModalElements();
+      if (!focusable.length) {
+        event.preventDefault();
+        fileModalPanel?.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const focusIsOutside =
+        document.activeElement instanceof HTMLElement && !fileModal.contains(document.activeElement);
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === fileModalPanel || focusIsOutside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || focusIsOutside)) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+    return;
+  }
+
   const isTyping =
     event.target instanceof HTMLElement &&
     ["input", "textarea", "select"].includes(event.target.tagName.toLowerCase());
@@ -305,6 +381,43 @@ window.addEventListener("keydown", (event) => {
     }
   }
 });
+
+const setTabState = (tabs, target, panel) => {
+  tabs.forEach((tab) => {
+    const isActive = tab === target;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+    tab.tabIndex = isActive ? 0 : -1;
+  });
+
+  if (panel && target.id) {
+    panel.setAttribute("aria-labelledby", target.id);
+  }
+};
+
+const bindTabKeyboardNavigation = (tabs, activate) => {
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("keydown", (event) => {
+      let nextIndex = index;
+      if (["ArrowRight", "ArrowDown"].includes(event.key)) {
+        nextIndex = (index + 1) % tabs.length;
+      } else if (["ArrowLeft", "ArrowUp"].includes(event.key)) {
+        nextIndex = (index - 1 + tabs.length) % tabs.length;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = tabs.length - 1;
+      } else {
+        return;
+      }
+
+      event.preventDefault();
+      const nextTab = tabs[nextIndex];
+      activate(nextTab);
+      nextTab.focus();
+    });
+  });
+};
 
 const canUsePointerParallax = window.matchMedia("(pointer: fine)").matches;
 
@@ -443,9 +556,7 @@ const renderPlatform = (key) => {
 };
 
 const setActivePlatformTab = (target) => {
-  platformTabs.forEach((tab) => {
-    tab.classList.toggle("is-active", tab === target);
-  });
+  setTabState(platformTabs, target, platformPanel);
   renderPlatform(target.dataset.platform);
 };
 
@@ -455,7 +566,10 @@ platformTabs.forEach((tab) => {
   tab.addEventListener("click", () => setActivePlatformTab(tab));
 });
 
-renderPlatform("tencent");
+bindTabKeyboardNavigation(platformTabs, setActivePlatformTab);
+if (platformTabs[0]) {
+  setActivePlatformTab(platformTabs[0]);
+}
 
 const scriptAgentData = {
   stage: {
@@ -625,9 +739,7 @@ const renderScriptAgentPanel = (key) => {
 };
 
 const setActiveScriptAgentTab = (target) => {
-  scriptAgentTabs.forEach((tab) => {
-    tab.classList.toggle("is-active", tab === target);
-  });
+  setTabState(scriptAgentTabs, target, scriptAgentPanel);
   renderScriptAgentPanel(target.dataset.agentTab);
 };
 
@@ -637,7 +749,10 @@ scriptAgentTabs.forEach((tab) => {
   tab.addEventListener("click", () => setActiveScriptAgentTab(tab));
 });
 
-renderScriptAgentPanel("stage");
+bindTabKeyboardNavigation(scriptAgentTabs, setActiveScriptAgentTab);
+if (scriptAgentTabs[0]) {
+  setActiveScriptAgentTab(scriptAgentTabs[0]);
+}
 
 const productionModules = {
   classify: {
@@ -683,7 +798,7 @@ const productionModules = {
       {
         tag: "提示词",
         title: "任务单字段",
-        text: "镜头用途、制作分类、输入方式、视觉要求、禁止内容、模型建议、后期要求。",
+        text: "镜头用途、制作分类、输入方式、视觉要求、禁止内容、模型建议、资产要求和后期要求。",
       },
       {
         tag: "成本",
@@ -700,8 +815,10 @@ const productionModules = {
       ["镜头用途", "场景建立、时间转换、情绪铺垫、危险场面替代、视觉补充等。"],
       ["输入方式", "文生视频、图生视频、首尾帧参考、参考图驱动、实拍素材增强。"],
       ["模型 / 工具建议", "根据镜头复杂度选择够用的模型，而不是默认使用最高成本模型。"],
+      ["资产要求", "锁定人物、场景、道具、服装、关键文字、参考来源和授权状态。"],
       ["测试轮次", "设定首轮测试数量和最大重试次数。"],
       ["成本预估", "记录每轮生成的积分、人民币成本和失败成本。"],
+      ["版本记录", "保留镜头编号、采用版本、生成时间、确认人和淘汰原因。"],
       ["替代方案", "改为空镜、采购素材、实拍远景、视效或传统后期处理。"],
       ["验收人", "导演、摄影指导、剪辑、后期统筹、制片、法务。"],
     ],
@@ -800,9 +917,7 @@ const renderProductionModule = (key) => {
 };
 
 const setActiveProductionNode = (target) => {
-  productionNodes.forEach((node) => {
-    node.classList.toggle("is-active", node === target);
-  });
+  setTabState(productionNodes, target, productionModulePanel);
   renderProductionModule(target.dataset.productionModule);
 };
 
@@ -812,7 +927,10 @@ productionNodes.forEach((node) => {
   node.addEventListener("click", () => setActiveProductionNode(node));
 });
 
-renderProductionModule("classify");
+bindTabKeyboardNavigation(productionNodes, setActiveProductionNode);
+if (productionNodes[0]) {
+  setActiveProductionNode(productionNodes[0]);
+}
 
 const fallbackCopy = (text) => {
   const area = document.createElement("textarea");

@@ -328,7 +328,7 @@ a {
 
 .topline,
 .hero-files,
-.agent-lab,
+.agent-lab-section,
 .scene-summary,
 .page-footer-note {
   transition:
@@ -370,6 +370,10 @@ a {
   display: grid;
   place-items: center;
   padding: clamp(18px, 4vw, 48px);
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 .file-modal__backdrop {
@@ -557,7 +561,6 @@ a {
 
 .startup-pending .hero-copy,
 .startup-pending .hero-files .folder-window,
-.startup-pending .agent-lab,
 .startup-pending .scene-summary,
 .startup-pending .page-footer-note {
   opacity: 0;
@@ -566,7 +569,6 @@ a {
 
 .startup-ready .hero-copy,
 .startup-ready .hero-files .folder-window,
-.startup-ready .agent-lab,
 .startup-ready .scene-summary,
 .startup-ready .page-footer-note {
   opacity: 1;
@@ -584,21 +586,17 @@ a {
   transition-delay: 220ms;
 }
 
-.startup-ready .agent-lab {
+.startup-ready .scene-summary {
   transition-delay: 300ms;
 }
 
-.startup-ready .scene-summary {
-  transition-delay: 380ms;
-}
-
 .startup-ready .page-footer-note {
-  transition-delay: 460ms;
+  transition-delay: 380ms;
 }
 
 .hero-stage {
   align-content: stretch;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto;
   gap: clamp(20px, 4vh, 46px);
   padding-top: clamp(82px, 10vh, 130px);
   padding-bottom: clamp(46px, 8vh, 82px);
@@ -1897,11 +1895,24 @@ h2 {
   outline: none;
 }
 
+.agent-lab-section {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  min-height: 72vh;
+  align-items: center;
+  border-block: 1px solid rgba(244, 240, 232, 0.1);
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.92), rgba(10, 9, 8, 0.84)),
+    rgba(5, 5, 5, 0.88);
+  padding: clamp(76px, 12vh, 144px) clamp(32px, 8vw, 120px);
+}
+
 .agent-lab {
   justify-self: center;
-  width: min(72vw, 860px);
+  width: min(88vw, 1180px);
   display: grid;
-  gap: 16px;
+  gap: clamp(28px, 5vh, 54px);
 }
 
 .agent-lab__head {
@@ -1912,11 +1923,11 @@ h2 {
 .agent-lab__head h2 {
   margin: 0;
   color: rgba(244, 240, 232, 0.9);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  line-height: 1.8;
+  font-family: var(--sans);
+  font-size: clamp(36px, 6vw, 82px);
+  font-weight: 320;
+  letter-spacing: 0;
+  line-height: 1;
 }
 
 .agent-lab__head p {
@@ -1933,7 +1944,7 @@ h2 {
 }
 
 .agent-card {
-  min-height: 188px;
+  min-height: 238px;
 }
 
 .agent-card strong {
@@ -1942,6 +1953,43 @@ h2 {
 
 .agent-card p {
   max-width: 430px;
+}
+
+.agent-card__actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.agent-card__actions a,
+.agent-page__actions a {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  border: 1px solid rgba(244, 240, 232, 0.22);
+  padding: 8px 12px;
+  color: rgba(244, 240, 232, 0.74);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.agent-card__actions a:hover,
+.agent-card__actions a:focus-visible,
+.agent-page__actions a:hover,
+.agent-page__actions a:focus-visible {
+  border-color: rgba(244, 240, 232, 0.58);
+  background: rgba(244, 240, 232, 0.06);
+  color: var(--cold-white);
+  outline: none;
 }
 
 .agent-detail-page {
@@ -2039,6 +2087,12 @@ h2 {
   color: rgba(244, 240, 232, 0.72);
   font-size: clamp(15px, 1.4vw, 18px);
   line-height: 1.9;
+}
+
+.agent-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .agent-page__grid {
@@ -2267,6 +2321,230 @@ h2 {
   line-height: 1.75;
 }
 
+.film-scene {
+  min-height: auto;
+  padding-block: clamp(120px, 15vw, 220px);
+}
+
+.production-proof-link {
+  display: inline-block;
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 20px;
+  padding: 10px 13px;
+  color: rgba(244, 240, 232, 0.78);
+  border: 1px solid rgba(244, 240, 232, 0.24);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.production-proof-link:hover,
+.production-proof-link:focus-visible {
+  color: var(--cold-white);
+  border-color: rgba(244, 240, 232, 0.62);
+  background: rgba(58, 23, 21, 0.34);
+  outline: none;
+}
+
+.film-stage {
+  position: relative;
+  top: auto;
+  display: grid;
+  align-content: start;
+  gap: clamp(34px, 5vw, 76px);
+  width: min(90vw, 1320px);
+  max-width: none;
+  min-height: 0;
+  opacity: 1;
+  transform: none;
+}
+
+.film-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  align-items: end;
+  gap: clamp(32px, 7vw, 120px);
+}
+
+.film-kicker,
+.film-meta span,
+.film-statement > span,
+.film-still figcaption {
+  color: rgba(244, 240, 232, 0.5);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+
+.film-heading h2 {
+  max-width: none;
+  margin-top: 14px;
+  font-size: clamp(58px, 9vw, 142px);
+  line-height: 0.92;
+  white-space: nowrap;
+}
+
+.film-logline {
+  margin: 0;
+  padding-bottom: 8px;
+  color: rgba(244, 240, 232, 0.78);
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.85;
+}
+
+.film-hero {
+  position: relative;
+  margin: 0;
+  border: 1px solid rgba(244, 240, 232, 0.2);
+  background: #050505;
+  overflow: hidden;
+}
+
+.film-hero img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  filter: brightness(0.82) saturate(0.78);
+  transition: filter 260ms ease, transform 500ms ease;
+}
+
+.film-hero:hover img {
+  filter: brightness(0.95) saturate(0.9);
+  transform: scale(1.006);
+}
+
+.film-play {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 17px;
+  color: var(--cold-white);
+  background: rgba(5, 5, 5, 0.78);
+  border: 1px solid rgba(244, 240, 232, 0.45);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+}
+
+.film-play:hover,
+.film-play:focus-visible {
+  background: rgba(58, 23, 21, 0.78);
+  border-color: rgba(244, 240, 232, 0.8);
+  outline: none;
+}
+
+.film-player {
+  margin-top: calc(clamp(34px, 5vw, 76px) * -0.45);
+}
+
+.film-player[hidden] {
+  display: none;
+}
+
+.film-player video {
+  display: block;
+  width: 100%;
+  max-height: 82vh;
+  background: #000;
+  border: 1px solid rgba(244, 240, 232, 0.24);
+}
+
+.film-meta {
+  display: grid;
+  grid-template-columns: 0.85fr 0.85fr 0.65fr 1.35fr 1.5fr;
+  gap: 0;
+  border-top: 1px solid rgba(244, 240, 232, 0.2);
+  border-bottom: 1px solid rgba(244, 240, 232, 0.2);
+}
+
+.film-meta article {
+  min-width: 0;
+  padding: 22px clamp(14px, 2vw, 28px);
+  border-right: 1px solid rgba(244, 240, 232, 0.15);
+}
+
+.film-meta article:first-child {
+  padding-left: 0;
+}
+
+.film-meta article:last-child {
+  border-right: 0;
+}
+
+.film-meta p {
+  margin: 10px 0 0;
+  color: rgba(244, 240, 232, 0.82);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.film-statement {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.35fr) minmax(0, 1.65fr);
+  gap: clamp(24px, 5vw, 84px);
+  width: min(100%, 1040px);
+}
+
+.film-statement p {
+  margin: 0;
+  color: rgba(244, 240, 232, 0.78);
+  font-size: clamp(16px, 1.45vw, 21px);
+  line-height: 1.9;
+}
+
+.film-stills {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.film-still {
+  grid-column: span 4;
+  margin: 0;
+}
+
+.film-still--wide {
+  grid-column: span 7;
+}
+
+.film-still--wide + .film-still {
+  grid-column: span 5;
+}
+
+.film-still--tall {
+  grid-column: span 5;
+}
+
+.film-still--tall + .film-still {
+  grid-column: span 7;
+}
+
+.film-still img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgba(244, 240, 232, 0.17);
+  filter: brightness(0.82) saturate(0.76);
+  transition: filter 220ms ease;
+}
+
+.film-still:hover img {
+  filter: brightness(1) saturate(0.92);
+}
+
+.film-still figcaption {
+  margin-top: 10px;
+}
+
 .research-stage {
   grid-template-columns: 1fr;
   align-items: center;
@@ -2460,9 +2738,11 @@ h2 {
   }
 
   .single-line-title,
-  .scene-copy > .single-line-copy {
+  .scene-copy > .single-line-copy,
+  .mobile-wrap-title {
     white-space: normal;
     text-wrap: balance;
+    overflow-wrap: anywhere;
   }
 
   .production-title,
@@ -2485,11 +2765,56 @@ h2 {
   .production-panel__cards,
   .ai-production__review,
   .review-grid,
+  .film-heading,
+  .film-meta,
+  .film-statement,
   .director-samples,
   .research-stage,
   .chapter-line.split {
     width: 100%;
     grid-template-columns: 1fr;
+  }
+
+  .film-scene {
+    padding-block: 96px;
+  }
+
+  .film-stage {
+    width: 100%;
+    gap: 34px;
+  }
+
+  .film-heading h2 {
+    font-size: clamp(54px, 18vw, 88px);
+    white-space: normal;
+  }
+
+  .film-play {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .film-meta article,
+  .film-meta article:first-child {
+    padding: 16px 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(244, 240, 232, 0.14);
+  }
+
+  .film-meta article:last-child {
+    border-bottom: 0;
+  }
+
+  .film-still,
+  .film-still--wide,
+  .film-still--wide + .film-still,
+  .film-still--tall,
+  .film-still--tall + .film-still {
+    grid-column: 1 / -1;
+  }
+
+  .production-proof-link {
+    grid-column: 1;
   }
 
   .chapter-line {
@@ -2504,8 +2829,8 @@ h2 {
 
   .scene-platform__title {
     font-size: clamp(24px, 5.6vw, 40px);
-    white-space: nowrap;
-    text-wrap: nowrap;
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .scene-platform__subtitle {
@@ -2561,8 +2886,8 @@ h2 {
 
   .ai-production__title {
     font-size: clamp(22px, 5vw, 36px);
-    white-space: nowrap;
-    text-wrap: nowrap;
+    white-space: normal;
+    text-wrap: balance;
   }
 
   .ai-production__subtitle {
@@ -2616,6 +2941,16 @@ h2 {
     justify-self: stretch;
   }
 
+  .agent-lab-section {
+    min-height: auto;
+    padding: 72px 22px;
+  }
+
+  .agent-card__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
   .agent-page__grid {
     grid-template-columns: 1fr;
   }
@@ -2627,6 +2962,19 @@ h2 {
 
   .agent-page__hero h1 {
     font-size: clamp(40px, 13vw, 72px);
+  }
+}
+
+@media (min-width: 881px) and (max-width: 1180px) {
+  .topline {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .topline::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -2659,7 +3007,6 @@ h2 {
 
   .startup-pending .hero-copy,
   .startup-pending .hero-files .folder-window,
-  .startup-pending .agent-lab,
   .startup-pending .scene-summary,
   .startup-pending .page-footer-note {
     opacity: 1;
